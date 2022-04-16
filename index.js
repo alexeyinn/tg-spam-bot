@@ -13,11 +13,13 @@ bot.hears("start", (ctx) => {
   if (intIdx) clearInterval(intIdx);
 
   intIdx = setInterval(() => {
-    ctx.telegram.sendMessage(
-      "@testgroupforspambot",
-      "Hi everyone https://user-images.githubusercontent.com/13700/35731649-652807e8-080e-11e8-88fd-1b2f6d553b2d.png"
-    );
-  }, 1000);
+    ctx.telegram.sendPhoto("@testgroupforspambot", {
+      source: "./assets/img/1.jpg",
+    });
+    ctx.telegram.sendPhoto("@testgroupforspambot", {
+      source: "./assets/img/2.jpg",
+    });
+  }, 3000);
 });
 bot.launch();
 
