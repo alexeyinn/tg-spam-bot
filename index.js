@@ -12,14 +12,18 @@ let intIdx;
 bot.hears("start", (ctx) => {
   if (intIdx) clearInterval(intIdx);
 
-  intIdx = setInterval(() => {
-    ctx.telegram.sendPhoto("@testgroupforspambot", {
+  intIdx = setInterval(async () => {
+    await ctx.telegram.sendPhoto("@testgroupforspambot", {
       source: "./assets/img/1.jpg",
     });
-    ctx.telegram.sendPhoto("@testgroupforspambot", {
+    await ctx.telegram.sendPhoto("@testgroupforspambot", {
       source: "./assets/img/2.jpg",
     });
-  }, 3000);
+    ctx.telegram.sendMessage(
+      "@testgroupforspambot",
+      "Первая линия 🏢 \n\nВторая линия 🥰😇\n\nТретья линия 💋\n\nt.me/alexeyinn"
+    );
+  }, 10000);
 });
 bot.launch();
 
