@@ -1,18 +1,17 @@
 const { Telegraf } = require("telegraf");
 require("dotenv").config();
-
 const bot = new Telegraf(process.env.BOT_TOKEN);
-bot.start((ctx) => ctx.reply("Welcome"));
-bot.help((ctx) => ctx.reply("Send me a sticker"));
-bot.on("sticker", (ctx) => ctx.reply("👍"));
-bot.hears("hi", (ctx) => ctx.reply("Hey there!"));
-
 let intIdx;
+
+bot.start((ctx) => ctx.reply("Welcome"));
+bot.hears("hi", (ctx) => ctx.reply("Hey there!"));
 
 bot.hears("start", (ctx) => {
   if (intIdx) clearInterval(intIdx);
 
   intIdx = setInterval(async () => {
+    // НАСТРОЙКА: здесь указываешь "логин" (@ЛОГИН_ГРУППЫ)группы, если нужно отправить в несколько групп,
+    // копируешь нижние 15 строчек кода, вставляешь следом за скопированными, везде меняешь логин группы, сохраняешь этот документ
     await ctx.telegram.sendPhoto("@testgroupforspambot", {
       source: "./assets/img/1.jpg",
     });
@@ -21,12 +20,18 @@ bot.hears("start", (ctx) => {
     });
     ctx.telegram.sendMessage(
       "@testgroupforspambot",
-      "Первая линия 🏢 \n\nВторая линия 🥰😇\n\nТретья линия 💋\n\nt.me/alexeyinn"
+      // НАСТРОЙКА: здесь изменяешь текст, в конце сообщения, указываешь логин аккаунта,
+      // который рекламируешь в формате t.me/ЗДЕСЬ_ЛОГИН или @ЗДЕСЬ_ЛОГИН
+      `Первая линия 🏢
+
+Вторая линия 🥰😇
+
+Третья линия 💋
+
+ЗДЕСЬ_ЛОГИН`
     );
+    // НАСТРОЙКА: здесь меняешь периодичность спама (30мин = 1800000)
   }, 10000);
 });
-bot.launch();
 
-// Enable graceful stop
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+bot.launch();
